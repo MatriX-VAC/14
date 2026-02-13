@@ -169,7 +169,7 @@ header h1 i {
 
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 25px;
 }
 
@@ -180,7 +180,6 @@ header h1 i {
     box-shadow: var(--shadow);
     transition: 0.3s;
     cursor: pointer;
-    position: relative;
     display: flex;
     flex-direction: column;
 }
@@ -190,27 +189,41 @@ header h1 i {
     box-shadow: 0 15px 30px rgba(0,0,0,0.15);
 }
 
+/* Общие правила для изображений и видео (кроме кружка) */
 .gallery-item img,
 .gallery-item video {
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9;
-    object-fit: cover;  /* теперь видео обрезается, чтобы заполнить рамку */
-    background-color: #f0f0f0;
+    object-fit: cover;
+    background-color: #000;
     display: block;
 }
 
-/* Кружок */
+/* Кружок — особый случай */
 .gallery-item.video-circle video {
-    border-radius: 50%;
-    width: min(250px, 80%);  /* кружок не больше 250px, но на узких экранах меньше */
-    height: auto;
+    width: min(220px, 70%);
     aspect-ratio: 1 / 1;
-    margin: 20px auto;
-    object-fit: cover;        /* для кружка лучше cover, чтобы заполнить круг без искажений */
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 20px auto;    /* центрирование по горизонтали */
     border: 5px solid white;
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    display: block;
+}
+
+/* В полноэкранном режиме видео показываем целиком */
+.gallery-item video:fullscreen {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+}
+
+.gallery-item video:-webkit-full-screen {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
 }
 
 /* Подпись */
@@ -706,41 +719,4 @@ footer {
     .volume-container {
         justify-content: center;
     }
-}
-/* Модальное окно */
-.video-modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.9);
-    align-items: center;
-    justify-content: center;
-}
-
-.video-modal-content {
-    width: 90%;
-    max-width: 1280px; /* под твой формат */
-    max-height: 90vh;
-    object-fit: contain;  /* в модалке видео показывается полностью */
-    border-radius: 10px;
-}
-
-.video-modal-close {
-    position: absolute;
-    top: 20px;
-    right: 35px;
-    color: #fff;
-    font-size: 40px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-    z-index: 1001;
-}
-
-.video-modal-close:hover {
-    color: var(--accent-pink);
 }
